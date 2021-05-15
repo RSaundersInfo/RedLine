@@ -8,11 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace RedLine
 {
     public partial class RedLine : Form
     {
+        public const int WM_NCLBUTTONDOWN = 0XA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+
         private const int MinHeight = 4;
         private const int MinWidth = 50;
         private const int BaseIntervalTime = 50;
@@ -28,6 +38,7 @@ namespace RedLine
         private int mInterval = BaseIntervalTime;
 
         private SettingsControl programSettings;
+        private bool FormDropped = false;
 
         #region public RedLine()
         /// <summary>
@@ -108,18 +119,21 @@ namespace RedLine
             this.BackColor = mBackColor;
             this.Height = mHeight;
             this.Width = mWidth;
-            //mXPositionFromCursor = -(mWidth / 2);
-            //this.Left = Cursor.Position.X + mXPositionFromCursor;
-            this.Left = Cursor.Position.X - (int)((double)mWidth * (double)mXPositionFromCursor / 100.0);
-            if (mYPositionFromCursor == 0) { mYPositionFromCursor = 1; }
-            if (mYPositionFromCursor < 0)
+
+            if (!FormDropped)
             {
-                this.Top = Cursor.Position.Y - this.Height + mYPositionFromCursor;
+                this.Left = Cursor.Position.X - (int)((double)mWidth * (double)mXPositionFromCursor / 100.0);
+                if (mYPositionFromCursor == 0) { mYPositionFromCursor = 1; }
+                if (mYPositionFromCursor < 0)
+                {
+                    this.Top = Cursor.Position.Y - this.Height + mYPositionFromCursor;
+                }
+                else
+                {
+                    this.Top = Cursor.Position.Y + mYPositionFromCursor;
+                }
             }
-            else
-            {
-                this.Top = Cursor.Position.Y + mYPositionFromCursor;
-            }
+
             if (SettingsOpen)
             {
                 fSettings.MapVarsToSettings(mHeight, mWidth, mYPositionFromCursor, mXPositionFromCursor, mOpacity, mInterval, mBackColor);
@@ -166,6 +180,9 @@ namespace RedLine
                         mWidth -= (5 + Boost);
                         if (mWidth < MinWidth) { mWidth = MinWidth; }
                         break;
+                    case Keys.D:
+                        DropLine();
+                        break;
 
                 }
                 ProgramTimer.Enabled = true;
@@ -192,6 +209,32 @@ namespace RedLine
             SaveSettings();
             ProgramTimer.Interval = BaseIntervalTime;
             SettingsOpen = false;
+        }
+        #endregion
+
+        #region private void DropStripMenuItem_Click(object sender, EventArgs e)
+        private void DropStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DropLine();
+        }
+        #endregion
+
+        #region private void DropLine()
+        private void DropLine()
+        {
+            DropStripMenuItem.Checked = !DropStripMenuItem.Checked;
+            FormDropped = DropStripMenuItem.Checked;
+        }
+        #endregion
+
+        #region private void RedLine_MouseDown(object sender, MouseEventArgs e)
+        private void RedLine_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         } 
         #endregion
     }
