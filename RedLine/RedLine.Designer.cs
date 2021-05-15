@@ -33,8 +33,10 @@
             this.ProgramTimer = new System.Windows.Forms.Timer(this.components);
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.TrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TrayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TrayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.DropStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,25 +55,42 @@
             // TrayMenu
             // 
             this.TrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DropStripMenuItem,
             this.SettingsToolStripMenuItem,
+            this.toolStripSeparator1,
             this.TrayMenuExit});
             this.TrayMenu.Name = "TrayMenu";
+            this.TrayMenu.ShowCheckMargin = true;
             this.TrayMenu.ShowImageMargin = false;
-            this.TrayMenu.Size = new System.Drawing.Size(156, 70);
-            // 
-            // TrayMenuExit
-            // 
-            this.TrayMenuExit.Name = "TrayMenuExit";
-            this.TrayMenuExit.Size = new System.Drawing.Size(155, 22);
-            this.TrayMenuExit.Text = "Exit";
-            this.TrayMenuExit.Click += new System.EventHandler(this.TrayMenuExit_Click);
+            this.TrayMenu.Size = new System.Drawing.Size(181, 98);
             // 
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.SettingsToolStripMenuItem.Text = "Settings";
+            this.SettingsToolStripMenuItem.ShortcutKeyDisplayString = "Alt+S";
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SettingsToolStripMenuItem.Text = "&Settings";
             this.SettingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
+            // 
+            // TrayMenuExit
+            // 
+            this.TrayMenuExit.Name = "TrayMenuExit";
+            this.TrayMenuExit.Size = new System.Drawing.Size(180, 22);
+            this.TrayMenuExit.Text = "Exit";
+            this.TrayMenuExit.Click += new System.EventHandler(this.TrayMenuExit_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // DropStripMenuItem
+            // 
+            this.DropStripMenuItem.Name = "DropStripMenuItem";
+            this.DropStripMenuItem.ShortcutKeyDisplayString = "Alt+D";
+            this.DropStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DropStripMenuItem.Text = "&Drop Line";
+            this.DropStripMenuItem.Click += new System.EventHandler(this.DropStripMenuItem_Click);
             // 
             // RedLine
             // 
@@ -89,6 +108,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.TopMost = true;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RedLine_KeyDown);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RedLine_MouseDown);
             this.TrayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -101,6 +121,8 @@
         private System.Windows.Forms.ContextMenuStrip TrayMenu;
         private System.Windows.Forms.ToolStripMenuItem TrayMenuExit;
         private System.Windows.Forms.ToolStripMenuItem SettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem DropStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 
