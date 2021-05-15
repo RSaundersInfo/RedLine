@@ -39,6 +39,7 @@ namespace RedLine
 
         private SettingsControl programSettings;
         private bool FormDropped = false;
+        private bool FormHidden = false;
 
         #region public RedLine()
         /// <summary>
@@ -162,10 +163,6 @@ namespace RedLine
                 ProgramTimer.Enabled = false;
                 switch (e.KeyCode)
                 {
-                    case Keys.X:
-                        ProgramTimer.Enabled = false;
-                        CloseProgram();
-                        break;
                     case Keys.Up:
                         mHeight += (2 + Boost);
                         break;
@@ -182,6 +179,13 @@ namespace RedLine
                         break;
                     case Keys.D:
                         DropLine();
+                        break;
+                    case Keys.H:
+                        HideLine();
+                        break;
+                    case Keys.X:
+                        ProgramTimer.Enabled = false;
+                        CloseProgram();
                         break;
 
                 }
@@ -235,6 +239,33 @@ namespace RedLine
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
+        }
+        #endregion
+
+        #region private void HideLine()
+        private void HideLine()
+        {
+            HideStripMenuItem1.Checked = !HideStripMenuItem1.Checked;
+            FormHidden = HideStripMenuItem1.Checked;
+
+            if (FormHidden == false)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                ProgramTimer.Enabled = true;
+            }
+            else
+            {
+                ProgramTimer.Enabled = false;
+                this.Hide();
+            }
+        }
+        #endregion
+
+        #region private void HideStripMenuItem1_Click(object sender, EventArgs e)
+        private void HideStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            HideLine();
         } 
         #endregion
     }
