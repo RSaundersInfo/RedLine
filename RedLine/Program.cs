@@ -9,7 +9,7 @@ namespace RedLine
 {
     static class Program
     {
-        static Mutex mutex = new Mutex(false, "RedLineInSysTray");
+        static readonly Mutex mutex = new Mutex(false, "RedLineInSysTray");
 
         /// <summary>
         /// The main entry point for the application.

@@ -24,7 +24,7 @@ namespace RedLine
 
 
         private const int MinHeight = 4;
-        private const int MinWidth = 50;
+        private const int MinWidth = 4;
         private const int BaseIntervalTime = 50;
 
         private Color mBackColor;

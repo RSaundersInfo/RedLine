@@ -12,7 +12,7 @@ namespace RedLine
 {
     public partial class SettingsForm : Form
     {
-        private int mBaseInterval;
+        private readonly int mBaseInterval;
         private int mCurrInterval;
         private Color mCurrColor;
 
@@ -33,7 +33,7 @@ namespace RedLine
             this.NOpacity.Maximum = 100;
 
             this.NHeight.Minimum = minHeight;
-            this.NHeight.Maximum = 1000;
+            this.NHeight.Maximum = 5000;
 
             this.NWidth.Minimum = minWidth;
             this.NWidth.Maximum = 5000;
