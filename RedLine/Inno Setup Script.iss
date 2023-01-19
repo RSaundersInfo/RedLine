@@ -56,7 +56,7 @@ Source: "{#PrgName}Settings.xml"; DestDir: "{app}"
 
 
 [Icons]
-Name: "{autoprograms}\{#BaseFolder}\{#AppName}"; Filename: "{app}\{#PrgName}.exe"
+Name: "{autoprograms}\{#AppName}"; Filename: "{app}\{#PrgName}.exe"
 Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#PrgName}.exe"; Check: not WizardNoIcons
 
 
